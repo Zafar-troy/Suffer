@@ -511,9 +511,12 @@ def _normalize_sofascore(event: dict) -> dict | None:
         if is_watched_team:
             tier = "priority"  # a watched team is never capped/downgraded/dropped
         else:
-            tier = _tournament_tier(tournament)
-            if tier is None:
-                return None
+            # WATCHED-TEAMS-ONLY MODE: no fallback to the tournament
+            # whitelist (_tournament_tier) below — if neither team is in
+            # data/teams_master.json, the match is dropped, full stop.
+            # This intentionally also excludes Malawi/ALWAYS_INCLUDE_COUNTRIES
+            # matches whose teams aren't individually on the watched list.
+            return None
 
         comp_name = tournament.get("name", "Football")
         event_id = event.get("id")
