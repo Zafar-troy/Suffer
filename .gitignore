@@ -1,6 +1,0 @@
-.env
-__pycache__/
-*.pyc
-cards/
-state_v2.json
-data/team_fixtures_state.json
